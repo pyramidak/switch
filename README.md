@@ -1,4 +1,4 @@
-# pyramidak firmware
+# pyramidak switch firmware
 DIY smart home the easy way
 https://firm.jantac.net/
 1) Non-limiting hardware with schema and PCB that you can simply order from https://jlcpcb.com
