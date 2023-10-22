@@ -23,7 +23,7 @@ AmpereMeter ampere;
 Soundmeter sound(&potentiometer);
 AnalogPercent analog;
 
-//Original idea of pyramidak firmware and this program was created by Zdeněk Jantač (pyramidak).
+//Original idea of pyramidak firmware and its program was created by Zdeněk Jantač (pyramidak).
 //GITHUB: https://github.com/pyramidak/switch
 /////////////////////////////////////////////////////////////////////////////////
 /// What is new
