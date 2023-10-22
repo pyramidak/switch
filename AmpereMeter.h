@@ -1,16 +1,30 @@
-#include "ACS712.h" //sensor AC current
-
 class AmpereMeter {
 
 private:
   const byte pinA = A0; 
-  ACS712 *ampere;
   float currentJump;
   float currentLast = -1;
   unsigned long lastRead; 
 
+  float getCurrentAC() {
+    uint32_t period = 1000000 / 50;
+    uint32_t t_start = micros();
+
+    uint32_t Isum = 0, measurements_count = 0;
+    int32_t Inow;
+
+    while (micros() - t_start < period) {
+      Inow = analogRead(pinA) - zeroPoint;
+      Isum += Inow*Inow;
+      measurements_count++;
+    }
+
+    float Irms = sqrt(Isum / measurements_count) / 1023.0 * 5.0 / 0.185;
+    return Irms;
+  }
+
 public:
-  int zeroPoint;
+  int zeroPoint = 512;
   float current;
   bool connected;
   bool changed;
@@ -20,9 +34,7 @@ public:
 
   void begin(int sensor) {    
     if (sensor == 11) {
-      ampere = new ACS712(ACS712_05B, pinA);
       connected = true;
-      if (zeroPoint != 0) ampere->setZeroPoint(zeroPoint);
     } else {
       connected = false;
       currentLast = -1;
@@ -31,7 +43,11 @@ public:
 
   int calibrate() {
     if (connected == false) {return 0;}
-    zeroPoint = ampere->calibrate();
+    uint16_t acc = 0;
+    for (int i = 0; i < 10; i++) {
+      acc += analogRead(pinA);
+    }
+    zeroPoint = acc / 10;
     measure();
     return zeroPoint;
   }
@@ -46,7 +62,7 @@ public:
 
   bool measure() {
     if (connected == true) {     
-      float value = ampere->getCurrentAC();  
+      float value = getCurrentAC();  
       //koeficient for 5V
       float koef; 
       if (value < 0.01) {

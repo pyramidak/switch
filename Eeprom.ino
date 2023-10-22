@@ -73,8 +73,8 @@ void eeprom_begin() {
   relay.diodLight = mem.readAndCheck(relay.diodLight, 25, "diodMode", 0, 3);
   threshold1 = mem.readAndCheck(25, 26, "threshold1", 1, 99);
   sound.threshold = mem.readAndCheck(sound.threshold, 27, "thresholdSound", 0, 1024);
-  ampere.zeroPoint = mem.readAndCheck(28, 23, "ampereZeroPoint");
-  ampere.threshold = mem.readAndCheck(178, 179, "ampereSwitchThreshold");
+  ampere.zeroPoint = mem.readAndCheck(ampere.zeroPoint, 28, 23, "ampereZeroPoint");
+  ampere.threshold = mem.readAndCheck(ampere.threshold, 178, 179, "ampereSwitchThreshold");
   potentiometer.resistance(mem.readAndCheck(potentiometer.resistance(), 29, "resistance", 0, 99));
   wi_fi.nameAP = mem.readAndCheck("", "wifiAPname", 31, 35, false);
   wi_fi.ssid = mem.readAndCheck(wi_fi.ssid, "wifiSSID", 36, 50, false);

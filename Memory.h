@@ -100,7 +100,7 @@ public:
     }
   }
 
-  int readAndCheck(int posLow, int posHigh, String text) {
+  int readAndCheck(int def, int posLow, int posHigh, String text) {
     posLow += memAlok;
     posHigh += memAlok;
     int valLow = EEPROM.read(posLow);
@@ -109,7 +109,11 @@ public:
     if (valHigh == 255) valHigh = 0;
     int value = (valHigh * 254) + valLow;
     report(text + ": " + String(value));
-    return value;
+    if (valLow == 0 and valHigh == 0) {
+      return def;
+    } else {
+      return value;
+    }
   }
 
   String readAndCheck(String def, String text, int start, int end, bool password) {

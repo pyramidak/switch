@@ -27,13 +27,14 @@ AnalogPercent analog;
 //GITHUB: https://github.com/pyramidak/switch
 /////////////////////////////////////////////////////////////////////////////////
 /// What is new
+/// 3.0.2 AC712 update
 /// 3.0.1 float temperature correction
 /// 3.0.0 saving setting improvement
 ///////////////////////////////
 ////    Settings block    /////
 ///////////////////////////////
 String deviceName      = "switch-box";
-String firmwareVersion = "3.0.1";
+String firmwareVersion = "3.0.2";
   // Update settings //
 String OTA_password    = "";
 String update_server   = "192.168.0.100";
