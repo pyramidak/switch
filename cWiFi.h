@@ -26,6 +26,7 @@ private:
       WiFi.disconnect();
       report("WiFi disconnected, status: " + String(WiFi.status()));
     }
+    led(false);
   }
 
   void reconnect() {
@@ -44,7 +45,7 @@ private:
       WiFi.forceSleepWake();
       delay(10);
       report("modem sleep: OFF", true);
-      reconnect();   
+      reconnect();
     } else if (digitalRead(pinAP) == HIGH and sleeping == false) { 
       sleeping = true;
       disconnect();

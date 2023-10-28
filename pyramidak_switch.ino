@@ -96,7 +96,10 @@ void setup() {
   }
 
   if (device == 5) {potentiometer.begin();}
-  if (device == 9) {motor.begin();}
+  if (device == 9) {
+    motor.begin();
+    wi_fi.LEDextra = true;
+  }
 
   termistor.begin(sensorDigital1);
   ampere.begin(sensorAnalog);
