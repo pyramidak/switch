@@ -118,6 +118,8 @@ void web_request(String &header) {
     report("motor command: stop");
   } else if (header.indexOf("?speed=") >= 0) {
     motor.speed(setOption(500, "speed", "motor speed", 4, 1024, 30, false));
+  } else if (header.indexOf("?motor_off=") >= 0) {
+    motor.disabled = setOption(0, "motor_off", "motor disabled", 0, 1, 169, false);
   //DEVICE/////////////////////////////////////////////////////////////////////////////////////
   } else if (header.indexOf("?name=") >= 0) {
     deviceName = setOption(deviceName, "name", "device name", 15, 136, 150, true);
@@ -299,7 +301,8 @@ void web_page(WiFiClient &client, String &header) {
       if (motor.clockwise == false or motor.running == false) createButton(client, "Forward", "motor/forward");   
       if (motor.clockwise == true or motor.running == false) createButton(client, "Backward", "motor/backward");   
       if (motor.running == true) createButton(client, "Stop", "motor/stop");   
-      createSubmit(client, "DEFAULT SPEED", String(int(round(mem.read(30) * 4.03))), "4-1024", "speed", 4, "");
+      createSubmit(client, "DEFAULT SPEED", int(round(mem.read(30) * 4.03)), "4-1024", "speed", 4, "");
+      createSubmit(client, "WHEN STOPPED", motor.disabled, "0-1", "motor_off", 1, "0-no power, 1-keep powered");
     }
 
     if (sensorAnalog >= 1 and sensorAnalog <= 6) {

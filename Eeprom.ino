@@ -42,7 +42,7 @@
 //166: temperature correction
 //167: humidity correction
 //168: remote update off
-//169:
+//169: motor when stopped keep powered
 //170-175: web password
 //176: min (moister dry, light night)
 //177: max (moister wet, light day)
@@ -91,6 +91,7 @@ void eeprom_begin() {
   termistor.fixTemperature = mem.readAndCheck(0, 166, "fixTemperature", 0, 99) / 10.0;
   termistor.fixHumidity = mem.readAndCheck(termistor.fixHumidity, 167, "fixHumidity", 0, 25);
   motor.speed(mem.readAndCheck(motor.speed(), 30, "motorSpeed", 4, 1024));
+  motor.disabled = mem.readAndCheck(0, 169, "motorDisabled", 0, 1);
   analog.min = mem.readAndCheck(analog.min, 176, "minAnalog", 0, 1024);
   analog.max = mem.readAndCheck(analog.max, 177, "maxAnalog", 0, 1024);
 }

@@ -13,6 +13,7 @@ private:
 public:
   bool running;
   bool clockwise;
+  int disabled;
   
   StepperMotor() {}
 
@@ -64,6 +65,7 @@ public:
   void stop() {
     if (constructed == false) {return;}
     running = false;
+    if (disabled == 0) off();
   } 
 
   void on() {
