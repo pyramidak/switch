@@ -48,7 +48,7 @@
 //177: max (moister wet, light day)
 //178: current threshold low
 //179: current threshold high
-//180: 
+//180: motor speed multiplier (higher get lower speed)
 
 void eeprom_begin() { 
   mem.begin();
@@ -92,6 +92,7 @@ void eeprom_begin() {
   termistor.fixHumidity = mem.readAndCheck(termistor.fixHumidity, 167, "fixHumidity", 0, 25);
   motor.speed(mem.readAndCheck(motor.speed(), 30, "motorSpeed", 4, 1024));
   motor.disabled = mem.readAndCheck(0, 169, "motorDisabled", 0, 1);
+  motor.multiplier = mem.readAndCheck(motor.multiplier, 180, "motorMultiplier", 25, 85);
   analog.min = mem.readAndCheck(analog.min, 176, "minAnalog", 0, 1024);
   analog.max = mem.readAndCheck(analog.max, 177, "maxAnalog", 0, 1024);
 }

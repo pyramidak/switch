@@ -118,6 +118,8 @@ void web_request(String &header) {
     report("motor command: stop");
   } else if (header.indexOf("?speed=") >= 0) {
     motor.speed(setOption(500, "speed", "motor speed", 4, 1024, 30, false));
+  } else if (header.indexOf("?multiplier=") >= 0) {
+    motor.multiplier = setOption(50, "multiplier", "motor speed multiplier", 25, 85, 180, false);    
   } else if (header.indexOf("?motor_off=") >= 0) {
     motor.disabled = setOption(0, "motor_off", "motor disabled", 0, 1, 169, false);
   //DEVICE/////////////////////////////////////////////////////////////////////////////////////
@@ -302,6 +304,7 @@ void web_page(WiFiClient &client, String &header) {
       if (motor.clockwise == true or motor.running == false) createButton(client, "Backward", "motor/backward");   
       if (motor.running == true) createButton(client, "Stop", "motor/stop");   
       createSubmit(client, "DEFAULT SPEED", int(round(mem.read(30) * 4.03)), "4-1024", "speed", 4, "");
+      createSubmit(client, "SPEED MULTIPLIER", motor.multiplier, "25-85", "multiplier", 2, "higher more slow speed");
       createSubmit(client, "WHEN STOPPED", motor.disabled, "0-1", "motor_off", 1, "0-no power, 1-keep powered");
     }
 

@@ -7,13 +7,14 @@ private:
   const int DIRR = D5;
   const int LED = D3;
   bool constructed;
-  int multiplier = 85;//min 82*(10+0), 82*(10+1023) = 84706
+  int maxSpeed = 850;
   int thisSpeed = 500; //0-1023 (1-1024)
 
 public:
   bool running;
   bool clockwise;
   int disabled;
+  int multiplier = 50;//50*0 to 50*1023 = 51150
   
   StepperMotor() {}
 
@@ -38,7 +39,7 @@ public:
     digitalWrite(STEP, HIGH);
     int motorDelay = (1024 - thisSpeed) * multiplier; //constant acceleration
     motorDelay = motorDelay / 1024.0 * (1024.0 * 1.1 - thisSpeed); //exponential acceleration
-    motorDelay += multiplier * 10; //min speed
+    motorDelay += maxSpeed; 
     delayMicroseconds(motorDelay);
     digitalWrite(STEP, LOW);
     delayMicroseconds(motorDelay); 
