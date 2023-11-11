@@ -7,11 +7,12 @@ void sensor_digital(int pinD, int sensorDigital, bool &digital) {
     ON = 0;
     OFF = 1;
   } 
+  int falseContactDelay = 75; //ms short change ignore
   int light;
   if (pinD == pinD1) {light = 1;}
   if (pinD == pinD2) {light = 2;}
   if (digitalRead(pinD) == ON and digital == false) {
-    delay(50); //ms short change ignore
+    delay(falseContactDelay); //ms short change ignore
     if (digitalRead(pinD) != ON) return;
     digital = true;
     relay.diod(light, digital, 2);
@@ -42,7 +43,7 @@ void sensor_digital(int pinD, int sensorDigital, bool &digital) {
       mqtt_digital2("ON");
     }    
   } else if (digitalRead(pinD) == OFF and digital == true) {
-    delay(50); //ms short change ignore
+    delay(falseContactDelay); //ms short change ignore
     if (digitalRead(pinD) != OFF) return;
     digital = false;
     if (sensorDigital == 1) {relay.timeOffMotionSensor = 0;}
